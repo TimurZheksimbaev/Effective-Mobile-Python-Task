@@ -1,13 +1,13 @@
 # Задание для Effective Mobile
-# Просто API для управления складом. Написаные основные CRUD операции для товаров и заказов.
+# Простое API для управления складом. Написаны основные CRUD операции для товаров и заказов.
 
-## Для запуска приложения сначала склоинруйте репозиторий
+## Для запуска приложения сначала склонируйте репозиторий
 ```bash
 git clone https://github.com/TimurZheksimbaev/Effective-Mobile-Python-Task.git
 cd Effective-Mobile-Python-Task
 ```
 
-## Потом скопируйте .env.local в .env
+## Потом скопируйте .env.example в .env
 ```bash
 cp .env.example .env
 ```
