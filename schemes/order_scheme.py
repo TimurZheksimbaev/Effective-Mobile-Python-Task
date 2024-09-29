@@ -4,9 +4,9 @@ from datetime import datetime
 from enum import Enum
 
 class OrderStatus(str, Enum):
-    in_progress = "in_progress"
-    shipped = "shipped"
-    delivered = "delivered"
+    in_progress = "в процессе"
+    shipped = "отправлен"
+    delivered = "доставлен"
 
 class OrderItemCreate(BaseModel):
     product_id: int
