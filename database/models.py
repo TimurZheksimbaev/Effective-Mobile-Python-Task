@@ -26,7 +26,7 @@ class Order(Base):
     id = Column(Integer, primary_key=True, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     status = Column(Enum(OrderStatus), default=OrderStatus.in_progress)
-    items = relationship("OrderItem", back_populates="order")
+    items = relationship("OrderItem", back_populates="order", lazy="selectin")
 
 class OrderItem(Base):
     __tablename__ = "order_items"
