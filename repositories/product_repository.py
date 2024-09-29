@@ -4,6 +4,7 @@ from database.models import Product
 from database.connect import get_db
 from fastapi import Depends
 
+
 class ProductRepository:
     def __init__(self, db: AsyncSession):
         self.db = db
@@ -16,7 +17,7 @@ class ProductRepository:
 
     async def get(self, product_id: int):
         result = await self.db.execute(select(Product).where(Product.id == product_id))
-        return result.scalar_one_or_none()
+        return result.scalars().first()
 
     async def list(self):
         result = await self.db.execute(select(Product))

@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from database.models import Order
 from database.connect import get_db
-from sqlalchemy import Depends
+from fastapi import Depends
 
 class OrderRepository:
     def __init__(self, db: AsyncSession):
