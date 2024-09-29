@@ -1,16 +1,37 @@
-# This is a sample Python script.
+from fastapi import FastAPI
+from routers.api_router import api_router
+from fastapi.middleware.cors import CORSMiddleware
+from database.connect import engine
+from database.models import Base
 
-# Press ⌘E to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+# Function to initialize the FastAPI application
+app = FastAPI(
+    title="API для управления складом",
+    description="Простое API для управления складом. Позволяет добавлять, удалять, обновлять и получать продукты и заказы.",
+    version="1.0.0"
+)
+
+# Add CORS Middleware (Optional, based on your needs)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust allowed origins for CORS
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include the main API router that contains both products and orders
+app.include_router(api_router)
+
+# Add startup and shutdown events if needed (Optional)
+@app.on_event("startup")
+async def startup_event():
+    # If you need to create database tables automatically
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Initialize and run the app if this file is executed directly
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
