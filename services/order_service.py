@@ -5,12 +5,13 @@ from database.models import Order, OrderItem, OrderStatus
 from exceptions import NotEnoughStockException, NotFoundException, InvalidStatusException, NotFoundItemsException
 from schemes.order_scheme import OrderCreate
 
+""" Класс сервис для заказов"""
 class OrderService:
     def __init__(self, order_repo: OrderRepository, product_repo):
         self.order_repo = order_repo
         self.product_repo = product_repo
 
-    # Creating a new order
+    # Создание нового заказа
     async def create_order(self, order_data: OrderCreate):
         order = Order()
         for item in order_data.items:
@@ -22,21 +23,21 @@ class OrderService:
             order.items.append(order_item)
         return await self.order_repo.create(order)
 
-    # Fetching the list of all orders
+    # Получение списка заказов
     async def list_orders(self):
         orders = await self.order_repo.list()
         if not orders:
             raise NotFoundItemsException("orders")
         return orders
 
-    # Fetching a specific order by ID
+    # Поолучение заказа поо ID
     async def get_order(self, order_id: int):
         order = await self.order_repo.get(order_id)
         if not order:
             raise NotFoundException("order", order_id)
         return order
 
-    # Updating the status of an order
+    # Редактирование заказа
     async def update_order_status(self, order_id: int, status: str):
         order = await self.get_order(order_id)
         if not order:

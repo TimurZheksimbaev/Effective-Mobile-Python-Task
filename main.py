@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from database.connect import engine
 from database.models import Base
 
-# Function to initialize the FastAPI application
 app = FastAPI(
     title="API для управления складом",
     description="Простое API для управления складом. Позволяет добавлять, удалять, обновлять и получать продукты и заказы.",
@@ -22,6 +21,7 @@ app.add_middleware(
 
 # Include the main API router that contains both products and orders
 app.include_router(api_router)
+
 
 # Add startup and shutdown events if needed (Optional)
 @app.on_event("startup")

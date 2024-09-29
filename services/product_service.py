@@ -5,20 +5,24 @@ from schemes.product_scheme import ProductCreate, ProductUpdate
 from database.models import Product
 from exceptions import NotFoundException, NotFoundItemsException
 
+""""Класс сервис для товаров"""
 class ProductService:
     def __init__(self, product_repo: ProductRepository):
         self.product_repo = product_repo
 
+    # Создание товара
     async def create_product(self, product_data: ProductCreate):
         data = Product(**product_data.dict())
         return await self.product_repo.create(data)
 
+    # Получение списка товаров
     async def list_products(self):
         products = await self.product_repo.list()
         if not products:
             raise NotFoundItemsException("products")
         return products
 
+    # Получение товара по ID
     async def get_product(self, product_id: int):
         product = await self.product_repo.get(product_id)
         if not product:
@@ -26,6 +30,7 @@ class ProductService:
             raise NotFoundException("product", product_id)
         return product
 
+    # Обновление товара
     async def update_product(self, product_id: int, product_data: ProductUpdate):
         data = product_data.dict(exclude_unset=True)
         product = await self.product_repo.update(product_id, data)
@@ -33,6 +38,7 @@ class ProductService:
             raise NotFoundException("product", product_id)
         return product
 
+    # Удаление товара
     async def delete_product(self, product_id: int):
         product = await self.product_repo.delete(product_id)
         if not product:
