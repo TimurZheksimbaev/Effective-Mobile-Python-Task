@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from services.order_service import get_order_service, OrderService
 from schemes.order_scheme import OrderCreate, OrderResponse
 from typing import List
-from database.models import Order
 from exceptions import NotEnoughStockException, NotFoundException, NotFoundItemsException, InvalidStatusException
+from fastapi.encoders import jsonable_encoder
 
 # Create the router for orders
 order_router = APIRouter(
